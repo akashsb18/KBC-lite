@@ -1,121 +1,228 @@
-import React, { useState } from 'react';
-import "./App.css"
-import "./components/Trivia"
-import Trivia from './components/Trivia';
+
+
+import "./App.css";
+import { useEffect, useMemo, useState } from "react";
+import Start from "./components/Start";
+import Timer from "./components/Timer";
+import Trivia from "./components/Trivia";
 
 function App() {
-  const [questionNumber, setQuestionNumber] = useState(2);
-  const [stop, setStop] = useState(false);
+  const [username, setUsername] = useState(null);
+  const [timeOut, setTimeOut] = useState(false);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [earned, setEarned] = useState("$ 0");
 
   const data = [
     {
       id: 1,
-      question: "Who has the most century in ODIs",
+      question: "Rolex is a company that specializes in what type of product?",
       answers: [
         {
-          text: "Virat Kohli",
+          text: "Phone",
           correct: false,
         },
         {
-          text: "Sachin Tendulkar",
+          text: "Watches",
           correct: true,
         },
         {
-          text: "Ricky Ponting",
+          text: "Food",
           correct: false,
         },
         {
-          text: "AB de Villiers",
+          text: "Cosmetic",
           correct: false,
-        }
-      ]
+        },
+      ],
     },
     {
       id: 2,
-      question: "Which has been the most successful team in the Women’s Hockey World Cup?",
+      question: "When did the website `Facebook` launch?",
       answers: [
         {
-          text: "Netherlands",
+          text: "2004",
           correct: true,
         },
         {
-          text: "Pakistan",
+          text: "2005",
           correct: false,
         },
         {
-          text: "India",
+          text: "2006",
           correct: false,
         },
         {
-          text: "Australia",
+          text: "2007",
           correct: false,
-        }
-      ]
+        },
+      ],
     },
     {
       id: 3,
-      question: "Which country hosted the 2018 Asian Games?",
+      question: "Who played the character of harry potter in movie?",
       answers: [
         {
-          text: "China",
+          text: "Johnny Deep",
           correct: false,
         },
         {
-          text: "India",
+          text: "Leonardo Di Caprio",
           correct: false,
         },
         {
-          text: "Indonesia",
+          text: "Denzel Washington",
+          correct: false,
+        },
+        {
+          text: "Daniel Red Cliff",
           correct: true,
         },
+      ],
+    },
+    {
+      id: 4,
+      question: "What Netflix show had the most streaming views in 2021?",
+      answers: [
         {
-          text: "Japan",
+          text: "Army of Thieves",
           correct: false,
-        }
-      ]
-    }
+        },
+        {
+          text: "The Guilty",
+          correct: false,
+        },
+        {
+          text: "Oxygen",
+          correct: false,
+        },
+        {
+          text: "Squid Game",
+          correct: true,
+        },
+      ],
+    },
+    // {
+    //   id: 3,
+    //   question: "Who played the character of harry potter in movie?",
+    //   answers: [
+    //     {
+    //       text: "Johnny Deep",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Leonardo Di Caprio",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Denzel Washington",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Daniel Red Cliff",
+    //       correct: true,
+    //     },
+    //   ],
+    // },
+    // {
+    //   id: 3,
+    //   question: "Who played the character of harry potter in movie?",
+    //   answers: [
+    //     {
+    //       text: "Johnny Deep",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Leonardo Di Caprio",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Denzel Washington",
+    //       correct: false,
+    //     },
+    //     {
+    //       text: "Daniel Red Cliff",
+    //       correct: true,
+    //     },
+    //   ],
+    // },
+  ];
 
-  ]
+  const moneyPyramid = useMemo(
+    () =>
+      [
+        { id: 1, amount: "₹ 1,000" },
+        { id: 2, amount: "₹ 2,000" },
+        { id: 3, amount: "₹ 3,000" },
+        { id: 4, amount: "₹ 5,000" },
+        { id: 5, amount: "₹ 10,000" },
+        { id: 6, amount: "₹ 20,000" },
+        { id: 7, amount: "₹ 40,000" },
+        { id: 8, amount: "₹ 80,000" },
+        { id: 9, amount: "₹ 1,60,000" },
+        { id: 10, amount: "₹ 3,20,000" },
+        { id: 11, amount: "₹ 6,40,000" },
+        { id: 12, amount: "₹ 12,50,000" },
+        { id: 13, amount: "₹ 25,50,000" },
+        { id: 14, amount: "₹ 50,00,000" },
+        { id: 15, amount: "₹ 1 Crore" },
 
-  const moneyPyramid = [
-    { id: 1, amount: "₹ 1,000" },
-    { id: 2, amount: "₹ 2,000" },
-    { id: 3, amount: "₹ 3,000" },
-    { id: 4, amount: "₹ 5,000" },
-    { id: 5, amount: "₹ 10,000" },
-    { id: 6, amount: "₹ 20,000" },
-    { id: 7, amount: "₹ 40,000" },
-    { id: 8, amount: "₹ 80,000" },
-    { id: 9, amount: "₹ 1,60,000" },
-    { id: 10, amount: "₹ 3,20,000" },
-    { id: 11, amount: "₹ 6,40,000" },
-    { id: 12, amount: "₹ 12,50,000" },
-    { id: 13, amount: "₹ 25,00,000" },
-    { id: 14, amount: "₹ 50,00,000" },
-    { id: 15, amount: "₹ 1 Crore" },
-    { id: 16, amount: "₹ 7 Crore" },
-  ].reverse();
+      ].reverse(),
+    []
+  );
+
+  useEffect(() => {
+    questionNumber > 1 &&
+      setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
+  }, [questionNumber, moneyPyramid]);
+
   return (
     <div className="app">
-      <div className="main">
-        <div className="top">
-          <div className="timer">30</div>
-        </div>
-        <div className="bottom">
-          <Trivia data={data} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} />
-        </div>
-      </div>
-      <div className="pyramid">
-        <ul className='moneyList'>
-          {moneyPyramid.map(m => (
-            <li className={questionNumber === m.id ? "moneyListItem active" : "moneyListItem"}>
-              <span className='moneyListItemNumber'>{m.id}</span>
-              <span className='moneyListItemAmount'>{m.amount}</span>
-            </li>
-          ))}
-
-        </ul>
-      </div>
+      {!username ? (
+        <Start setUsername={setUsername} />
+      ) : (
+        <>
+          <div className="main">
+            {timeOut ? (
+              <h1 className="endText">You earned: {earned}</h1>
+            ) : (
+              <>
+                <div className="top">
+                  <div className="timer">
+                    <Timer
+                      setTimeOut={setTimeOut}
+                      questionNumber={questionNumber}
+                    />
+                  </div>
+                </div>
+                <div className="bottom">
+                  <Trivia
+                    data={data}
+                    questionNumber={questionNumber}
+                    setQuestionNumber={setQuestionNumber}
+                    setTimeOut={setTimeOut}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+          <div className="pyramid">
+            <ul className="moneyList">
+              {moneyPyramid.map((m) => (
+                <li
+                  className={
+                    questionNumber === m.id
+                      ? "moneyListItem active"
+                      : "moneyListItem"
+                  }
+                >
+                  <span className="moneyListItemNumber">{m.id}</span>
+                  <span className="moneyListItemAmount">{m.amount}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
     </div>
   );
 }
