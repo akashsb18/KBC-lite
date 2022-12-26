@@ -4,7 +4,79 @@ import "./components/Trivia"
 import Trivia from './components/Trivia';
 
 function App() {
-  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(2);
+  const [stop, setStop] = useState(false);
+
+  const data = [
+    {
+      id: 1,
+      question: "Who has the most century in ODIs",
+      answers: [
+        {
+          text: "Virat Kohli",
+          correct: false,
+        },
+        {
+          text: "Sachin Tendulkar",
+          correct: true,
+        },
+        {
+          text: "Ricky Ponting",
+          correct: false,
+        },
+        {
+          text: "AB de Villiers",
+          correct: false,
+        }
+      ]
+    },
+    {
+      id: 2,
+      question: "Which has been the most successful team in the Women’s Hockey World Cup?",
+      answers: [
+        {
+          text: "Netherlands",
+          correct: true,
+        },
+        {
+          text: "Pakistan",
+          correct: false,
+        },
+        {
+          text: "India",
+          correct: false,
+        },
+        {
+          text: "Australia",
+          correct: false,
+        }
+      ]
+    },
+    {
+      id: 3,
+      question: "Which country hosted the 2018 Asian Games?",
+      answers: [
+        {
+          text: "China",
+          correct: false,
+        },
+        {
+          text: "India",
+          correct: false,
+        },
+        {
+          text: "Indonesia",
+          correct: true,
+        },
+        {
+          text: "Japan",
+          correct: false,
+        }
+      ]
+    }
+
+  ]
+
   const moneyPyramid = [
     { id: 1, amount: "₹ 1,000" },
     { id: 2, amount: "₹ 2,000" },
@@ -30,7 +102,7 @@ function App() {
           <div className="timer">30</div>
         </div>
         <div className="bottom">
-          <Trivia />
+          <Trivia data={data} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} />
         </div>
       </div>
       <div className="pyramid">
