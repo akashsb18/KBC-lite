@@ -36,7 +36,7 @@ export default function Trivia({
     const handleClick = (a) => {
         setSelectedAnswer(a);
         setClassName("answer active");
-        delay(500, () => {
+        delay(2000, () => {
             setClassName(a.correct ? "answer correct" : "answer wrong");
         });
         // setTimeout(() => {
